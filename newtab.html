@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Tab — Aura</title>
+  <meta name="description" content="Aura — a personal futuristic digital sanctuary." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="icons/icon16.png" sizes="16x16" />
+  <link rel="icon" type="image/png" href="icons/icon48.png" sizes="48x48" />
+  <link rel="icon" type="image/png" href="icons/icon128.png" sizes="128x128" />
+</head>
+<body>
+
+  <!-- ═══ Background Layers ═══ -->
+  <canvas id="particle-canvas"></canvas>
+  <div class="aurora-layer">
+    <div class="aurora-blob a1"></div>
+    <div class="aurora-blob a2"></div>
+    <div class="aurora-blob a3"></div>
+  </div>
+  <div class="vignette"></div>
+  <div class="noise-overlay"></div>
+
+  <!-- ═══ Onboarding Modal ═══ -->
+  <div id="onboarding-overlay" class="modal-overlay hidden">
+    <div class="modal-card onboarding-card">
+      <div class="onboarding-star">✦</div>
+      <h2>Welcome to <span class="glow-text">Aura</span></h2>
+      <p class="modal-sub">Your personal digital cosmos awaits.</p>
+      <label for="onboarding-name">What's your name?</label>
+      <input type="text" id="onboarding-name" placeholder="Enter your name…" maxlength="24" autofocus />
+      <button id="onboarding-save" class="btn-accent">Enter the Cosmos</button>
+    </div>
+  </div>
+
+  <!-- ═══ Main Scene ═══ -->
+  <div class="scene">
+
+    <!-- Top Bar (Global across all views) -->
+    <header class="top-bar">
+      <div id="weather-pod" class="weather-pod">
+        <span id="weather-icon" class="w-icon">☁️</span>
+        <span id="weather-temp" class="w-temp">--°</span>
+        <span id="weather-city" class="w-city">Loading…</span>
+      </div>
+      <button id="settings-btn" class="settings-btn" title="Settings" aria-label="Settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.32 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </header>
+
+    <div class="views-wrapper">
+      <!-- ═══ View: Home ═══ -->
+      <div id="view-home" class="view view-home active">
+        <!-- Center Stage -->
+        <div class="center-stage" data-depth="1">
+          <div class="ambient-orb"></div>
+
+          <p id="greeting" class="greeting reveal" style="--d:1">Good Evening,</p>
+          <h1 id="hero-name" class="hero-name reveal" style="--d:2">Welcome</h1>
+
+          <div class="clock-core reveal" style="--d:3">
+            <span id="clock-hm" class="clock-hm">00:00</span>
+            <div class="clock-side">
+              <span id="clock-sec" class="clock-sec">00</span>
+              <span id="clock-ampm" class="clock-ampm">AM</span>
+            </div>
+          </div>
+          <div class="clock-meta reveal" style="--d:4">
+            <span id="day-name">Friday</span>
+            <span class="meta-dot">·</span>
+            <span id="full-date">29 May 2026</span>
+          </div>
+
+          <!-- Search (Comet Style Merged AI / Web) -->
+          <div class="search-dock reveal" style="--d:5">
+            <div class="search-bar">
+              <svg class="search-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="search-input" class="search-input" placeholder="Search your universe or ask AI…" autocomplete="off" />
+              <kbd class="search-hint">↵</kbd>
+            </div>
+            <div id="search-results" class="search-dropdown hidden"></div>
+          </div>
+        </div>
+
+        <!-- Favorites Belt -->
+        <div class="favorites-belt reveal" style="--d:6" data-depth="0.5">
+          <div id="favorites-track" class="favorites-track">
+            <!-- JS renders favorites here -->
+          </div>
+        </div>
+
+        <!-- Home Panels Container -->
+        <div class="home-panels-container" data-depth="0.3">
+          <!-- Notes Panel -->
+          <div class="dock-panel notes-panel reveal" style="--d:7">
+            <div class="panel-accent notes-accent"></div>
+            <div class="panel-header">
+              <h2 class="panel-title">Notes</h2>
+              <button id="add-note-btn" class="panel-btn" title="New Note">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+            <div id="notes-list" class="notes-list"></div>
+            <div id="notes-empty" class="empty-state hidden">
+              <span class="empty-glyph">📝</span>
+              <p>No notes yet. Create one.</p>
+            </div>
+          </div>
+
+          <!-- Joke Panel -->
+          <div class="dock-panel joke-panel reveal" style="--d:8">
+            <div class="panel-accent joke-accent"></div>
+            <div class="panel-header">
+              <h2 class="panel-title">Daily Joke</h2>
+              <button id="joke-refresh" class="panel-btn" title="Refresh Joke">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              </button>
+            </div>
+            <div id="joke-content" class="joke-content">
+              <div class="joke-deco">&ldquo;</div>
+              <p id="joke-setup" class="joke-setup">Loading a joke…</p>
+              <p id="joke-punchline" class="joke-punchline"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ═══ Add / Edit Favorite Modal ═══ -->
+  <div id="fav-modal-overlay" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h3 id="fav-modal-title">Add Favorite</h3>
+      <label for="fav-name-input">Name</label>
+      <input type="text" id="fav-name-input" placeholder="YouTube" maxlength="30" />
+      <label for="fav-url-input">URL</label>
+      <input type="url" id="fav-url-input" placeholder="https://youtube.com" />
+      <div class="modal-actions">
+        <button id="fav-modal-cancel" class="btn-ghost">Cancel</button>
+        <button id="fav-modal-save" class="btn-accent">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Note Editor Modal ═══ -->
+  <div id="note-modal-overlay" class="modal-overlay hidden">
+    <div class="modal-card note-modal-card">
+      <h3 id="note-modal-title">New Note</h3>
+      <label for="note-title-input">Title</label>
+      <input type="text" id="note-title-input" placeholder="Meeting notes…" maxlength="60" />
+      <label for="note-body-input">Content</label>
+      <textarea id="note-body-input" placeholder="Write something…" rows="6"></textarea>
+      <div class="modal-actions">
+        <button id="note-modal-delete" class="btn-danger hidden">Delete</button>
+        <span class="modal-spacer"></span>
+        <button id="note-modal-cancel" class="btn-ghost">Cancel</button>
+        <button id="note-modal-save" class="btn-accent">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Settings Modal ═══ -->
+  <div id="settings-modal-overlay" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h3>Settings</h3>
+
+      <label for="settings-name">Your Name</label>
+      <input type="text" id="settings-name" placeholder="Your name" maxlength="24" />
+
+      <!-- OpenRouter API settings -->
+      <label for="settings-ai-model">Selected AI Model</label>
+      <select id="settings-ai-model" class="modal-select">
+        <option value="google/gemini-2.5-flash">Gemini 2.5 Flash</option>
+        <option value="google/gemini-2.5-pro">Gemini 2.5 Pro</option>
+        <option value="meta-llama/llama-3-8b-instruct">Llama 3 8B</option>
+        <option value="meta-llama/llama-3.1-70b-instruct">Llama 3.1 70B</option>
+        <option value="anthropic/claude-3.5-sonnet">Claude 3.5 Sonnet</option>
+        <option value="deepseek/deepseek-chat">DeepSeek V3</option>
+        <option value="mistralai/mistral-7b-instruct">Mistral 7B</option>
+        <option value="custom">Custom Model...</option>
+      </select>
+
+      <div id="custom-model-container" class="hidden-field">
+        <label for="settings-custom-model">Custom OpenRouter Model ID</label>
+        <input type="text" id="settings-custom-model" placeholder="e.g., openai/gpt-4o-mini" />
+      </div>
+
+      <label for="settings-or-key">OpenRouter API Key (Optional)</label>
+      <input type="password" id="settings-or-key" placeholder="Enter API Key (fallback to default)" />
+
+      <div class="modal-actions">
+        <button id="settings-cancel" class="btn-ghost">Cancel</button>
+        <button id="settings-save" class="btn-accent">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Slide-out AI Assistant Drawer (Comet Style) ═══ -->
+  <div id="ai-drawer" class="ai-drawer hidden-drawer">
+    <div class="ai-drawer-header">
+      <div class="ai-drawer-title">
+        <span>✦</span> Aura AI
+      </div>
+      <div class="ai-drawer-actions">
+        <button id="ai-clear-btn" class="panel-btn" title="Clear Chat">🗑️</button>
+        <button id="ai-close-btn" class="panel-btn" title="Close AI Panel">✕</button>
+      </div>
+    </div>
+
+    <div class="ai-model-selector-bar">
+      <select id="ai-drawer-model-select" class="ai-model-select-dropdown">
+        <option value="google/gemini-2.5-flash">Gemini 2.5 Flash</option>
+        <option value="google/gemini-2.5-pro">Gemini 2.5 Pro</option>
+        <option value="meta-llama/llama-3-8b-instruct">Llama 3 8B</option>
+        <option value="meta-llama/llama-3.1-70b-instruct">Llama 3.1 70B</option>
+        <option value="anthropic/claude-3.5-sonnet">Claude 3.5 Sonnet</option>
+        <option value="deepseek/deepseek-chat">DeepSeek V3</option>
+        <option value="mistralai/mistral-7b-instruct">Mistral 7B</option>
+        <option value="custom">Custom Model...</option>
+      </select>
+    </div>
+
+    <div id="ai-chat-messages" class="ai-chat-messages">
+      <div class="ai-message system">
+        Greetings Traveler. I am Aura AI. Select a model, type a prompt, or run an AI query from search to stream insights.
+      </div>
+    </div>
+
+    <div class="ai-chat-input-area">
+      <textarea id="ai-chat-input" placeholder="Query the cosmos…" rows="1"></textarea>
+      <button id="ai-chat-send" class="btn-chat-send" title="Send Query">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Aura — Personal New Tab",
+  "version": "2.1.0",
+  "description": "A premium, minimal, and futuristic personal new tab dashboard with greeting, clock, favorites, notes, jokes, weather, and an integrated AI assistant.",
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://wttr.in/*",
+    "https://v2.jokeapi.dev/*",
+    "https://openrouter.ai/*"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
